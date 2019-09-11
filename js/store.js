@@ -77,15 +77,20 @@
 	Store.prototype.save = function (updateData, callback, id) {
 		var data = JSON.parse(localStorage[this._dbName]);
 		var todos = data.todos;
+		var ids = todos.map(todo => todo.id);
 
 		callback = callback || function () {};
 
-		// Generate an ID
-	    var newId = ""; 
-	    var charset = "0123456789";
+		function generateId() {
+			// Generate an ID
+			var newId = ""; 
+			var charset = "0123456789";
+	
+			for (var i = 0; i < 6; i++) {
+				 newId += charset.charAt(Math.floor(Math.random() * charset.length));
+			}
 
-        for (var i = 0; i < 6; i++) {
-     		newId += charset.charAt(Math.floor(Math.random() * charset.length));
+			 return ids.indexOf(newId) === -1 ? newId : generateId();
 		}
 
 		// If an ID was actually given, find the item and update each property
@@ -103,7 +108,8 @@
 			callback.call(this, todos);
 		} else {
 
-    		// Assign an ID
+			// Assign an ID
+			var newId = generateId();
 			updateData.id = parseInt(newId);
     
 
