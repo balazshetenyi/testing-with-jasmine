@@ -96,16 +96,18 @@ describe('controller', function () {
 			subject.setView('');
 
 			expect(view.render).toHaveBeenCalledWith("showEntries", [todo]);
+			expect(view.render).toHaveBeenCalledWith("setFilter", 'Active');
 		});
-
+		
 		it('should show completed entries', function () {
 			// TODO: write test
 			var todo = {title: 'my todo', completed: true};
 			setUpModel([todo]);
-
+			
 			subject.setView('');
-
+			
 			expect(view.render).toHaveBeenCalledWith("showEntries", [todo]);
+			expect(view.render).toHaveBeenCalledWith("setFilter", 'Completed');
 		});
 	});
 
@@ -167,7 +169,7 @@ describe('controller', function () {
 
 		subject.setView('Active');
 
-		expect(view.render).toHaveBeenCalledWith('setFilter', '');
+		expect(view.render).toHaveBeenCalledWith('setFilter', 'Active');
 		
 	});
 
@@ -179,7 +181,7 @@ describe('controller', function () {
 
 			subject.setView('');
 
-			expect(view.render).toHaveBeenCalledWith('toggleAll', {checked: false});
+			expect(view.render).toHaveBeenCalledWith('toggleAll', {checked: true});
 		});
 
 		it('should update the view', function () {
